@@ -60,7 +60,7 @@ Users.segment(sqlContext, 15, colList=Seq("sd_is_new_user", "sd_is_revenue_user"
     - number of sessions user opened to engage.
 - Get enagement metrics for top ranked users, paid users or apply any other filters.
 
-![Image](img/EngagementMetrics.png?raw=true)
+![Image](img/UEM.png?raw=true)
 
 > User Behavior Metrics (UBM)
 
@@ -70,6 +70,7 @@ Users.segment(sqlContext, 15, colList=Seq("sd_is_new_user", "sd_is_revenue_user"
     - added item to the cart or 
     - checked out / purchased an item.
 - Get behavior metrics for top ranked users, paid users or apply any other filters
+![Image](img/UBM.png?raw=true)
 
 > Extend Analysis Using SQL, Scala Or Python
 
