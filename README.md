@@ -2,6 +2,9 @@
 
 Scala based API solution to build audience behavior solution on Spark Cluster
 
+The analytical solution is for analyzing audience behavior and is built on top of the data-pipeline using metrics-driven ETL. The rich analytics are packaged as a set of notebooks for interactively analyzing audience behavior from the data cubes created in the ETL stage.
+
+
 ## API Guide
 
 ***Event Metrics***

@@ -5,8 +5,8 @@ Daily Conversion Rates For Cohort - use this data product to peform:
     - apply filter to identify granular trends, go deep in your data
     - apply filters on aggregated columns
 
----
 > Conversion Rate By Daily Cohorts
+
 ```
 Users.cohort(sqlContext, startDaysAgo=7, daysToConversionLimit=5, aggFilterOn=Some("ConversionRate"),aggFilterOp="gt", aggFilterVal=Some(0))
 ```
@@ -21,6 +21,7 @@ The value of this chart is that you can instantly see the pattern of conversion 
 - Mapping these patterns repeatedly helps understand the purchase behavior of your customers.
 
 > Run Spark And HIVE SQL
+
 ```
 -- cohort query
 select sd_year, sd_month, sd_day, (dayOfYear(dateTime(`utc_time`)) - dayOfYear(dateTimeFromEpoch(`sd_first_seen_at`))) as days_to_conversion,
