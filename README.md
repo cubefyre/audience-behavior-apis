@@ -5,6 +5,80 @@ Scala based API solution to build audience behavior solution on Spark Cluster
 API Guide
 ---
 
+***Event Metrics***
+---
+---
+Use these APIs to:
+- execute trend with a set of parameters to understand trend
+- execute segment to group events information over a period
+
+> Trend Analysis for Events and Page Views
+
+```
+trend(
+  sqlContext : SQLContext,
+  analysisPeriod : Int = 7,
+  eventList : Seq[String] = Seq(),
+  includePageViewsTrend : Boolean = true,
+  includeEventsTrend : Boolean = true,
+  periodType : String = "daily",
+  movingAverage : Option[Int] = None,
+  segmentBy: Option[String] = None,
+  topNSegments : Int = 10,
+  filterOn: Option[String] = None,
+  filterOp: String = "eq",
+  filterVal: Option[Any] = None,
+  weekendOnly : Boolean = false
+) 
+
+trendAny(
+  sqlContext : SQLContext,
+  analysisPeriod : Int = 7,
+  aggregateOnCol: AggregateOnCol = eventAggCol,
+  periodType : String = "daily",
+  movingAverage : Option[Int] = None,
+  segmentBy: Option[String] = None,
+  topNSegments : Int = 10,
+  filterOn: Option[String] = None,
+  filterOp: String = "eq",
+  filterVal: Option[Any] = None,
+  weekendOnly : Boolean = false
+)
+```
+---
+> TopN - GroupBy Over a Period 
+
+```
+//segment multiple cols over a period
+segment(
+  sqlContext: SQLContext,
+  analysisPeriod: Int = 7,
+  eventList : Seq[String] = Seq(),
+  includeDefaults : Boolean = true,
+  segmentBy: Option[String] = None,
+  topNSegments : Int = 10,
+  filterOn: Option[String] = None,
+  filterOp: String = "eq",
+  filterVal: Option[Any] = None,
+  sortBy : Seq[String] = Seq()
+)
+
+//segment single col over a period
+segmentAny(
+  sqlContext: SQLContext,
+  aggregateOnCol: AggregateOnCol = eventAggCol,
+  analysisPeriod: Int = 7,
+  segmentBy: Option[String] = None,
+  topNSegments : Int = 10,
+  filterOn: Option[String] = None,
+  filterOp: String = "eq",
+  filterVal: Option[Any] = None,
+  sortBy : Seq[String] = Seq()
+) 
+```
+---
+
+
 > Definition of Input Parameters:
 
 - Use the analysis period to specify the analysis window. Default value is 7 days. 
