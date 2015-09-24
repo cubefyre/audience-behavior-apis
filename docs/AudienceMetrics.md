@@ -59,3 +59,74 @@ Users.segment(sqlContext, 15, colList=Seq("sd_is_new_user", "sd_is_revenue_user"
     - number of key events fired during the engagment and 
     - number of sessions user opened to engage.
 - Get enagement metrics for top ranked users, paid users or apply any other filters.
+
+![Image](img/EngagementMetrics.png?raw=true)
+
+> User Behavior Metrics (UBM)
+
+- Behavior is defined as the actions perforemd while engaging with any of the digital assets - web, mobile app or a social interaction. Examples include: 
+    - opend a video, 
+    - read a review, 
+    - added item to the cart or 
+    - checked out / purchased an item.
+- Get behavior metrics for top ranked users, paid users or apply any other filters
+
+> Extend Analysis Using SQL, Scala Or Python
+
+Flexibility to run Spark SQL and write Scala / Python code against a Spark cluster
+- Cube is avaialble to you as dataframe in Scala and as a temporary table in the cluster for SQL access
+- Run SQL queries directly against the curated data
+- Write your own scala or python code and execute against the spark cluster
+
+```
+Run Spark And HIVE SQL
+%sql
+---desc sd_user_metricsII
+--select sd_year, sd_month, sd_day, count(distinct user_id), sum(sd_is_revenue_user), sum(sd_is_new_user) from sd_user_metricsII where dateIsAfterOrEqual(dateTimeFromEpoch(`sd_first_seen_at`),dateTimeFromEpoch(1439510400000)) group by sd_year, sd_month, sd_day
+---select concat(sd_year, '-', sd_month, '-', sd_day) as date , count(sd_is_new_user) as all_users from sd_user_metricsII where sd_country_name='United States' group by sd_year, sd_month, sd_day
+--- Users, New and Returning
+select sd_year, sd_month, sd_day, count(distinct user_id), sum(sd_is_new_user) as nu, sum(CASE when sd_is_new_user=0 then 1 else 0 end) as ru  from sd_user_metricsII group by sd_year, sd_month, sd_day
+---select concat(sd_year, '-', sd_month, '-', sd_day) as dimension , count(distinct user_id) as all_users, ROUND(AVG(count(distinct user_id)) OVER(ORDER BY sd_year, sd_month, sd_day ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),2) as moving_average  from sd_user_metricsII where intervalContainsDateTime(intervalFromStr("2015-07-29T00:00:00.000Z/2015-08-06T00:00:00.000Z"),dateTime(`utc_time`)) group by sd_year, sd_month, sd_day 
+```
+
+```
+Scala
+
+import com.github.nscala_time.time.Imports._
+
+import org.apache.spark.sql._
+import org.apache.spark.sql.catalyst.analysis.UnresolvedFunction
+import org.apache.spark.sql.catalyst.expressions._
+import org.apache.spark.sql.catalyst.dsl.expressions._
+
+import org.sparklinedata.spark.dateTime.dsl.expressions._
+import org.sparklinedata.spark.dateTime.dsl._
+
+// Get engagement metrics for the past 7 days using SQL against a temp table
+val inAnalysisPeriodExpr = Users.getPeriodExpr(Users.dateExpr, Users.currentDate, 7)
+/*
+val inAnalysisPeriodExpr = Users.getPeriodExpr(Users.dateExpr, Users.currentDate, 7)
+val sqlSt = date"select concat(sd_year, '-', sd_month, '-', sd_day) as date, round(avg(sd_session_count),2) as average_sessions, round(avg(sd_event_count),2) as average_events, abs(round(avg(sd_time_spent)/1000,2)) as average_time_spent from sd_user_metricsII where $inAnalysisPeriodExpr group by sd_year, sd_month, sd_day"
+val sqlResults = sql(sqlSt)
+//println(sqlResults.queryExecution.logical)
+sqlResults.take(20).foreach(println)
+*/
+
+// new vs returning users using spark dataframe functions
+/*
+val userColExpr =  org.apache.spark.sql.functions.count(new Column("user_id")).alias("Users")
+val newUserColExpr =  org.apache.spark.sql.functions.sum(new Column("sd_is_new_user")).alias("New User")
+val retUserColExpr = org.apache.spark.sql.functions.sum(org.apache.spark.sql.functions.when(new Column("sd_is_new_user").equalTo(0), 1).otherwise(0)).alias("Returning User")
+Users.userMetricsDF.get.groupBy("sd_year", "sd_month", "sd_day").agg(userColExpr, newUserColExpr, retUserColExpr).show()
+*/
+
+// using spark expresssion, get time-spent metrics
+val expr =  org.apache.spark.sql.catalyst.analysis.UnresolvedFunction("round", Seq(
+      org.apache.spark.sql.catalyst.expressions.Abs(
+        org.apache.spark.sql.catalyst.expressions.Average(
+          org.apache.spark.sql.catalyst.analysis.UnresolvedAttribute("sd_time_spent")
+        )
+      ),
+    Literal(2)))
+Users.userMetricsDF.get.where(new Column(inAnalysisPeriodExpr).as("TimeSpent")).groupBy("sd_year", "sd_month", "sd_day").agg(new Column(expr)).show()
+```
