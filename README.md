@@ -3,7 +3,6 @@
 Scala based API solution to build audience behavior solution on Spark Cluster
 
 API Guide
----
 
 ***Event Metrics***
 ---
@@ -333,7 +332,7 @@ behaviorInclusive(
 ```
 ---
 
-*** Cohort Analysis***
+***Cohort Analysis***
 ---
 > Cohort Analysis for Users
 
@@ -371,9 +370,154 @@ The value of this chart is that you can instantly see the pattern of conversion 
 
 - Mapping these patterns repeatedly helps understand the purchase behavior of your customers.
 
+---
+***Conversion Analysis***
+---
+> Conversion Ratio Trend Analysis
 
+```
+trend(
+    sqlContext : SQLContext,
+    analysisPeriod : Int = 7,
+    includeDefaults : Boolean = true,
+    periodType : String = "daily",
+    movingAverage : Option[Int] = None,
+    segmentBy: Option[String] = None,
+    topNSegments : Int = 10,
+    filterOn: Option[String] = None,
+    filterOp: String = "eq",
+    filterVal: Option[Any] = None,
+    aggFilterOn : Option[String] = None,
+    aggFilterOp: String = "eq",
+    aggFilterVal: Option[Any] = None,
+    weekendOnly : Boolean = false
+) 
+
+```
+---
+> Conversion Ratios by Segments 
+
+```
+//segment multiple cols over a period
+segment(
+    sqlContext: SQLContext,
+    analysisPeriod: Int = 7,
+    eventList : Seq[String] = Seq(),
+    includeDefaults : Boolean = true,
+    segmentBy: Option[String] = None,
+    topNSegments : Int = 10,
+    filterOn: Option[String] = None,
+    filterOp: String = "eq",
+    filterVal: Option[Any] = None,
+    sortBy : Seq[String] = Seq(),
+    aggFilterOn : Option[String] = None,
+    aggFilterOp: String = "eq",
+    aggFilterVal: Option[Any] = None  
+)
+```
 ---
 
+***Impact Analysis***
+---
+
+>Top Events and Pages Impacting Conversion Goals
+
+```
+
+topEvents(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	includeDaysToGoal : Boolean = false,
+	includeSessionsToGoal : Boolean = false,
+	includeTimeToGoal : Boolean = false,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+
+
+topPages(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	includeDaysToGoal : Boolean = false,
+	includeSessionsToGoal : Boolean = false,
+	includeTimeToGoal : Boolean = false,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+```
+
+> Top Events and Pages Influencing Users
+
+```
+def topEventsByUsers(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+
+topPagesByUsers(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+```
+
+> Top Events and Pages Influencing Revenues
+
+```
+topEventsByRevenues(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+
+topPagesByRevenues(
+	sqlContext: SQLContext,
+	analysisPeriod: Int = 7,
+	topN : Int = 5,
+	filterOn: Option[String] = None,
+	filterOp: String = "eq",
+	filterVal: Option[Any] = None,
+	sortBy : Seq[String] = Seq(),
+	aggFilterOn : Option[String] = None,
+	aggFilterOp: String = "eq",
+	aggFilterVal: Option[Any] = None
+)
+
+```
 
 > Definition of Input Parameters:
 
