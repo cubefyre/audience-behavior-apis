@@ -349,6 +349,7 @@ cohort(
     aggFilterVal: Option[Any] = None,
     weekendOnly : Boolean = false
 ) 
+```
 ---
 > Definition of Input Parameters:
 
