@@ -350,14 +350,14 @@ cohort(
     weekendOnly : Boolean = false
 ) 
 ```
----
+
 > Definition of Input Parameters:
 
 - Use the startDaysAgo to specify the analysis window. Default value is 14 days. 
 - Use daysToConvertLimit to change the...
-- Use filterOn, filterOp and filterVal parameters to filter analysis. The default value for filter operator (filterOp) is eq.  
-    - Other values this parameter can take are geq, leq, lt, gt, like.
----
+- Use filterOn, filterOp and filterVal parameters to filter analysis. The default value for filter operator (filterOp) is eq.
+- Other values this parameter can take are geq, leq, lt, gt, like.
+
 > How to intrepret the graph
 
 - Conversion Rate by Daily Cohorts maps the rate at which returning users “Convert” N days after they first visit the site.
