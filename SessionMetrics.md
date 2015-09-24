@@ -53,7 +53,7 @@ Sessions.segment(sqlContext, 30, colList=Seq("sd_is_cart_session", "sd_is_revenu
 --- Daily count of all sessions and sessions that captured all events - video, cart and revenue events.
 select concat(sd_year, '-', sd_month, '-', sd_day) as date, count(sd_session_id) as all_sessions, sum(case when sd_is_revenue_session = 1 and sd_is_video_session = 1 and sd_is_cart_session = 1 then 1 else 0 end) as inclusive_sessions from sd_session_metrics where intervalContainsDateTime(intervalFromStr("2015-07-30T00:00:00.000Z/2015-08-07T00:00:00.000Z"),dateTime(`utc_time`)) group by sd_year, sd_month, sd_day
 ```
-**Scala**
+
 ```
 import org.apache.spark.sql.{Column, DataFrame}
 
