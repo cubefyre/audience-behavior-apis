@@ -184,7 +184,7 @@ behaviorInclusive(sqlContext : SQLContext,
 ```
 ---
 
-***User Meterics***
+***User Metrics***
 ---
 Use these APIs to:
 - execute trend with a set of parameters to understand trend of users
