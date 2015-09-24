@@ -1,8 +1,8 @@
-# audience-behavior-server
+# Audience Behavior Analysis - Scala Based Server APIs
 
 Scala based API solution to build audience behavior solution on Spark Cluster
 
-API Guide
+## API Guide
 
 ***Event Metrics***
 ---
