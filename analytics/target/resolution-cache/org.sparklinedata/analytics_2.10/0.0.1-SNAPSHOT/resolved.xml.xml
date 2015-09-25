@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+	<info organisation="org.sparklinedata"
+		module="analytics_2.10"
+		revision="0.0.1-SNAPSHOT"
+		status="integration"
+		publication="20150811145831"
+	>
+		<description>
+		analytics
+		</description>
+	</info>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="sources" visibility="public" description=""/>
+		<conf name="docs" visibility="public" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+		<artifact name="analytics_2.10" type="pom" ext="pom" conf="pom"/>
+		<artifact name="analytics_2.10" type="jar" ext="jar" conf="compile"/>
+		<artifact name="analytics_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+		<artifact name="analytics_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.scala-lang" name="scala-compiler" rev="2.10.4" conf="scala-tool->default,optional(default)"/>
+		<dependency org="org.scala-lang" name="scala-library" rev="2.10.4" conf="scala-tool->default,optional(default);compile->default(compile)"/>
+		<dependency org="com.google.guava" name="guava" rev="14.0.1" conf="provided->default(compile)"/>
+		<dependency org="org.eclipse.jetty" name="jetty-server" rev="8.1.14.v20131031" conf="provided->default(compile)"/>
+		<dependency org="org.eclipse.jetty" name="jetty-plus" rev="8.1.14.v20131031" conf="provided->default(compile)"/>
+		<dependency org="org.eclipse.jetty" name="jetty-util" rev="8.1.14.v20131031" conf="provided->default(compile)"/>
+		<dependency org="org.eclipse.jetty" name="jetty-http" rev="8.1.14.v20131031" conf="provided->default(compile)"/>
+		<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="8.1.14.v20131031" conf="provided->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.4.0" conf="provided->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-sql_2.10" rev="1.4.0" conf="provided->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-catalyst_2.10" rev="1.4.0" conf="provided->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-hive_2.10" rev="1.4.0" conf="provided->default(compile)"/>
+		<dependency org="org.apache.hadoop" name="hadoop-client" rev="2.4.0" conf="provided->default(compile)">
+			<exclude org="asm" module="asm" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.ow2.asm" module="asm" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.jboss.netty" module="netty" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="commons-logging" module="commons-logging" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="com.google.guava" module="guava" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.mortbay.jetty" module="servlet-api-2.5" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="javax.servlet" module="servlet-api" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="junit" module="junit" name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="org.json4s" name="json4s-native_2.10" rev="3.2.10" conf="compile->default(compile)"/>
+		<dependency org="org.json4s" name="json4s-ext_2.10" rev="3.2.10" conf="compile->default(compile)"/>
+		<dependency org="org.json4s" name="json4s-jackson_2.10" rev="3.2.10" conf="compile->default(compile)"/>
+		<dependency org="joda-time" name="joda-time" rev="2.7" conf="compile->default(compile)"/>
+		<dependency org="org.joda" name="joda-convert" rev="1.7" conf="compile->default(compile)"/>
+		<dependency org="com.github.nscala-time" name="nscala-time_2.10" rev="1.6.0" conf="compile->default(compile)"/>
+		<dependency org="com.github.SparklineData" name="spark-datetime" rev="0.0.1" conf="compile->default(compile)"/>
+		<dependency org="net.java.dev.jets3t" name="jets3t" rev="0.9.0" conf="compile->default(compile)">
+			<exclude org="commons-logging" module="commons-logging" name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<dependency org="org.apache.httpcomponents" name="httpcore" rev="4.3" conf="compile->default(compile)"/>
+		<dependency org="commons-io" name="commons-io" rev="2.4" conf="compile->default(compile)"/>
+		<dependency org="org.apache.commons" name="commons-email" rev="1.4" conf="compile->default(compile)"/>
+		<dependency org="com.github.SparklineData" name="uap-java" rev="v1.1.0" conf="compile->default(compile)"/>
+		<dependency org="com.maxmind.geoip2" name="geoip2" rev="2.1.0" conf="compile->default(compile)"/>
+		<dependency org="com.twitter" name="util-collection_2.10" rev="6.24.0" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.10" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.10" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="jul-to-slf4j" rev="1.7.10" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.7.10" conf="compile->default(compile)"/>
+		<dependency org="log4j" name="log4j" rev="1.2.17" conf="compile->default(compile)"/>
+		<dependency org="org.scalatest" name="scalatest_2.10" rev="2.2.4" conf="test->default(compile)"/>
+		<dependency org="org.scalacheck" name="scalacheck_2.10" rev="1.12.2" conf="test->default(compile)"/>
+	</dependencies>
+</ivy-module>

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Vendor: com.twitter
+Implementation-Title: util-function
+Implementation-Version: 6.24.0
+Implementation-Vendor-Id: com.twitter
+Specification-Vendor: com.twitter
+Specification-Title: util-function
+Specification-Version: 6.24.0
+

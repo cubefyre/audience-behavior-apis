@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: spark-datetime
+Implementation-Version: 0.0.1
+Specification-Vendor: org.sparklinedata
+Specification-Title: spark-datetime
+Implementation-Vendor-Id: org.sparklinedata
+Specification-Version: 0.0.1
+Implementation-Vendor: org.sparklinedata
+
